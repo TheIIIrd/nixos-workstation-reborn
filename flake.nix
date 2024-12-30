@@ -2,15 +2,14 @@
   description = "My system configuration";
 
   inputs = {
-
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    stylix.url = "github:danth/stylix";
 
     # COMING SOON...
     #nixvim = {
@@ -19,7 +18,7 @@
     #};
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs: let
     system = "x86_64-linux";
     homeStateVersion = "24.11";
     user = "amper";
@@ -31,6 +30,7 @@
     makeSystem = { hostname, stateVersion }: nixpkgs.lib.nixosSystem {
       system = system;
       specialArgs = {
+        pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
         inherit inputs stateVersion hostname user;
       };
 
