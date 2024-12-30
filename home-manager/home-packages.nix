@@ -8,10 +8,11 @@
     fragments
     obs-studio
     obsidian
-    onlyoffice-bin_latest
+    onlyoffice-desktopeditors
     protonplus
     protontricks
     ptyxis
+    # telegram-desktop
     tenacity
     tor-browser
     ungoogled-chromium
