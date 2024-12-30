@@ -38,14 +38,6 @@
           rev = "94bdcc19218681debb252475fd9d11cfd274d9b1";
         };
       }
-      {
-        name = "ranger_tmux";
-        src = builtins.fetchGit {
-          url = "https://github.com/joouha/ranger_tmux";
-          ref = "master";
-          rev = "05ba5ddf2ce5659a90aa0ada70eb1078470d972a";
-        };
-      }
     ];
   };
 
