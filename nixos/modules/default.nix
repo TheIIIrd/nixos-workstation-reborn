@@ -4,14 +4,27 @@
     ./bluetooth.nix
     ./boot.nix
     ./env.nix
+    ./firefox.nix
+    ./flatpak.nix
+    ./gnome.nix
+    ./graphics.nix
     ./home-manager.nix
-    ./hyprland.nix
+    ./locale.nix
     ./mime.nix
     ./net.nix
     ./nh.nix
     ./nix.nix
+    ./printing.nix
+    # ./spice.nix
+    ./steam.nix
     ./timezone.nix
+    # ./tlp.nix
+    ./trim.nix
     ./user.nix
+    ./virt-manager.nix
+    # ./yggdrasil.nix
+    ./zapret.nix
+    ./zerotierone.nix
     ./zram.nix
   ];
 }
