@@ -21,7 +21,6 @@
     vscodium
 
     # CLI utils
-    bat
     bc
     fastfetch
     ffmpeg
