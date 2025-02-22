@@ -4,7 +4,7 @@ This repository is a fork of [Andrey0189's NixOS Config Reborn](https://github.c
 
 ![screenshot](./screenshots/screenshot-gnome-1.png)
 
-You can still find Andrey0189's old configuration [here](https://github.com/Andrey0189/nixos-config)
+You can still find Andrey0189's old configuration [here](https://github.com/Andrey0189/nixos-config).
 
 ## ✨ Features
 
@@ -17,15 +17,17 @@ You can still find Andrey0189's old configuration [here](https://github.com/Andr
 
 To get started with this setup, follow these steps:
 
-1. **Install NixOS**: If you haven't already installed NixOS, follow the [NixOS Installation Guide](https://nixos.org/manual/nixos/stable/#sec-installation) for detailed instructions.
+1. **Install NixOS**:
 
-2. **Clone the Repository**:
+   If you haven't already installed NixOS, follow the [NixOS Installation Guide](https://nixos.org/manual/nixos/stable/#sec-installation) for detailed instructions.
+
+3. **Clone the Repository**:
 
     ```bash
     git clone https://github.com/TheIIIrd/nixos-workstation-reborn.git ~/.nix && cd ~/.nix
     ```
 
-3. **Copy one of the hosts configuration to set up your own**:
+4. **Copy one of the hosts configuration to set up your own**:
 
     ```bash
     cd hosts
@@ -33,40 +35,46 @@ To get started with this setup, follow these steps:
     cd <your_hostname>
     ```
 
-4. **Put your `hardware-configuration.nix` file there**:
+5. **Put your `hardware-configuration.nix` file there**:
 
     ```bash
     cp --no-preserve=mode /etc/nixos/hardware-configuration.nix .
     ```
 
-5. **Edit `hardware-configuration.nix` for disk mounting if needed**:
+6. **Edit `hardware-configuration.nix` for disk mounting if needed**:
 
     ```bash
     vim hardware-configuration.nix
     ```
 
-6. **Edit `hosts/<your_hostname>/local-packages.nix` and `home-manager/home-packages.nix` files if needed**:
+7. **Edit `hosts/<your_hostname>/local-packages.nix` and `home-manager/home-packages.nix` files if needed**:
 
     ```bash
     vim local-packages.nix
     vim ../../home-manager/home-packages.nix
     ```
 
-7. **Edit `home-manager/modules/git.nix` and `nixos/modules/graphics/default.nix`**
+8. **Edit `home-manager/modules/git.nix`**:
 
     ```bash
     vim ../../home-manager/modules/git.nix
+    ```
+
+9. **Edit `nixos/modules/default.nix` and `nixos/modules/graphics/default.nix`**:
+
+    ```bash
+    vim ../../nixos/modules/default.nix
     vim ../../nixos/modules/graphics/default.nix
     ```
 
-8. **Specify the parameters for `nixos/modules/zapret.nix`**
+10. **Specify the parameters for `nixos/modules/zapret.nix`**:
 
     ```bash
     nix-shell -p zapret --command blockcheck
     vim ../../nixos/modules/zapret.nix
     ```
 
-9. **Finally, edit the `flake.nix` file**:
+11. **Finally, edit the `flake.nix` file**:
 
     ```bash
     sed -i -e 's/amper/<your_username>/g' \
@@ -93,12 +101,12 @@ To get started with this setup, follow these steps:
     ...
     ```
 
-10. **Rebuilding**:
+12. **Rebuilding**:
 
     ```bash
     cd ~/.nix
     git add .
-    nixos-rebuild boot --flake ./#<hostname>
+    sudo nixos-rebuild boot --flake ./#<hostname>
     # or nixos-install --flake ./#<hostname> if you are installing on a fresh system
     ```
 
@@ -107,7 +115,7 @@ To get started with this setup, follow these steps:
     nh home switch
     ```
 
-11. **Configure Flatpak and gnome keybindings switch-input-source if needed**
+13. **Configure Flatpak and gnome keybindings switch-input-source if needed**:
 
     ```bash
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -118,7 +126,7 @@ To get started with this setup, follow these steps:
     gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L']"
     ```
 
-12. **Copy corefonts to the home directory**
+14. **Copy corefonts to the home directory**:
 
     ```bash
     # the path to corefonts-1 may vary
