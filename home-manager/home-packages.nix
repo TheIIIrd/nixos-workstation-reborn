@@ -51,12 +51,16 @@
 
     # Extensions
     gnomeExtensions.appindicator
+    # gnomeExtensions.arcmenu
     gnomeExtensions.blur-my-shell
-    gnomeExtensions.caffeine
+    # gnomeExtensions.burn-my-windows
+    # gnomeExtensions.caffeine
     gnomeExtensions.clipboard-indicator
+    # gnomeExtensions.compiz-windows-effect
+    # gnomeExtensions.dash-to-panel
     gnomeExtensions.just-perfection
-    gnomeExtensions.quick-lang-switch
-    gnomeExtensions.vitals
+    # gnomeExtensions.quick-lang-switch
+    # gnomeExtensions.vitals
 
     # Fonts
     corefonts
