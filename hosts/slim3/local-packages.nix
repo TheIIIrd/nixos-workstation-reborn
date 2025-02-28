@@ -12,7 +12,7 @@
     inkscape
     # jetbrains.idea-community-bin
     # jetbrains.pycharm-community-bin
-    kdenlive
+    kdePackages.kdenlive
     krita
     mission-center
 
