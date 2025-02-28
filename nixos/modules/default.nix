@@ -3,7 +3,7 @@
     ./audio.nix
     ./bluetooth.nix
     ./boot.nix
-    ./de
+    ./desktop
     ./env.nix
     ./firefox.nix
     ./flatpak.nix
