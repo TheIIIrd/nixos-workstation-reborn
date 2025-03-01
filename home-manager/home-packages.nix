@@ -7,6 +7,7 @@
     # Desktop apps
     fragments
     gnome-builder
+    kicad
     obs-studio
     obsidian
     protonplus
