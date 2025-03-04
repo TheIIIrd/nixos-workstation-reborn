@@ -5,6 +5,7 @@
     # Packages in each category are sorted alphabetically
 
     # Desktop apps
+    cambalache
     fragments
     gnome-builder
     kicad
