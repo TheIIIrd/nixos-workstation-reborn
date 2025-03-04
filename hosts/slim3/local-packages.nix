@@ -32,6 +32,7 @@
     cargo
     clang
     clang-tools
+    cmake
     gcc
     gnumake
     ninja
