@@ -24,6 +24,7 @@
 
     # CLI utils
     bc
+    binwalk
     fastfetch
     ffmpeg
     file
