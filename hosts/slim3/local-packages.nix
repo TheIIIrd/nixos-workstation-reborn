@@ -4,7 +4,6 @@
   environment.systemPackages = with pkgs; [
     # Desktop apps
     amberol
-    # amnezia-vpn
     clapper
     dconf-editor
     easyeffects
