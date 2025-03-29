@@ -12,6 +12,7 @@
     ./home-manager.nix
     ./kernel.nix
     ./locale.nix
+    # ./mcontrol.nix
     ./mime.nix
     ./net.nix
     ./nh.nix
