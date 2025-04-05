@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   programs.gpu-screen-recorder = {
     enable = true;
-    package = pkgs.gpu-screen-recorder-gtk;
   };
+  environment.systemPackages = [ pkgs.gpu-screen-recorder-gtk ];
 }
