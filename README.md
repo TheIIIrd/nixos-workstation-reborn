@@ -77,9 +77,9 @@ To get started with this setup, follow these steps:
 10. **Finally, edit the `flake.nix` file**
 
     ```bash
-    sed -i -e 's/amper/<your_username>/g' \
-       -e '/{ hostname = "330-15ARR"; stateVersion = "24.11"; }/d' \
-       -e 's/hostname = "slim3"/hostname = "<your_hostname>"/' \
+    sed -i -e 's/theiiird/<your_username>/g' \
+       -e '/{ hostname = "nixos-blank"; stateVersion = "24.05"; }/d' \
+       -e 's/hostname = "nixos"/hostname = "<your_hostname>"/' \
        -e 's/stateVersion = "24.05"/stateVersion = "<your_state_version>"/' \
        -e 's/homeStateVersion = "24.11";/homeStateVersion = "<your_home_manager_state_version>";/' \
        ~/.nix/flake.nix
@@ -91,11 +91,11 @@ To get started with this setup, follow these steps:
         system = "x86_64-linux";
     --  homeStateVersion = "24.11";
     ++  homeStateVersion = "<your_home_manager_state_version>";
-    --  user = "amper";
+    --  user = "theiiird";
     ++  user = "<your_username>";
         hosts = [
-    --    { hostname = "slim3"; stateVersion = "24.05"; }
-    --    { hostname = "330-15ARR"; stateVersion = "24.11"; }
+    --    { hostname = "nixos"; stateVersion = "24.11"; }
+    --    { hostname = "nixos-blank"; stateVersion = "24.05"; }
     ++    { hostname = "<your_hostname>"; stateVersion = "<your_state_version>"; }
         ];
     ...
