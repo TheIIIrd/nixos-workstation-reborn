@@ -7,8 +7,8 @@
     # Desktop apps
     easyeffects
     gparted
-    # gpu-screen-recorder
     # gpu-screen-recorder-gtk
+    # gpu-screen-recorder
     inkscape
     # jetbrains.idea-community-bin
     # jetbrains.pycharm-community-bin
