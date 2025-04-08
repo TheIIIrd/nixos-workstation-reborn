@@ -16,4 +16,28 @@
     snapshot
     totem
   ];
+
+  environment.systemPackages = (with pkgs; [
+    amberol
+    cambalache
+    clapper
+    dconf-editor
+    fragments
+    gnome-builder
+    gnome-tweaks
+    mission-center
+    ptyxis
+  ]) ++ (with pkgs.gnomeExtensions; [
+    appindicator
+    # arcmenu
+    # blur-my-shell
+    # burn-my-windows
+    # caffeine
+    clipboard-indicator
+    # compiz-windows-effect
+    # dash-to-panel
+    just-perfection
+    # quick-lang-switch
+    # vitals
+  ]);
 }

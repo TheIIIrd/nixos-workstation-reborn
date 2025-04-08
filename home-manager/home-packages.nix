@@ -5,15 +5,11 @@
     # Packages in each category are sorted alphabetically
 
     # Desktop apps
-    cambalache
-    fragments
-    gnome-builder
     kicad
     obs-studio
     obsidian
     protonplus
     protontricks
-    ptyxis
     qucs-s
     r2modman
     tenacity
@@ -51,19 +47,6 @@
     python312Packages.matplotlib
     python312Packages.numpy
     python312Packages.pip
-
-    # Extensions
-    gnomeExtensions.appindicator
-    # gnomeExtensions.arcmenu
-    gnomeExtensions.blur-my-shell
-    # gnomeExtensions.burn-my-windows
-    # gnomeExtensions.caffeine
-    gnomeExtensions.clipboard-indicator
-    # gnomeExtensions.compiz-windows-effect
-    # gnomeExtensions.dash-to-panel
-    gnomeExtensions.just-perfection
-    # gnomeExtensions.quick-lang-switch
-    # gnomeExtensions.vitals
 
     # Fonts
     corefonts
