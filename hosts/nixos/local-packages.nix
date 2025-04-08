@@ -2,22 +2,19 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    # Packages in each category are sorted alphabetically
+
     # Desktop apps
-    amberol
-    clapper
-    dconf-editor
     easyeffects
     gparted
     # gpu-screen-recorder
     # gpu-screen-recorder-gtk
-    gnome-tweaks
     inkscape
     # jetbrains.idea-community-bin
     # jetbrains.pycharm-community-bin
     kdePackages.kdenlive
     krita
     # mcontrolcenter
-    mission-center
 
     # CLI utils
     aria2

@@ -80,7 +80,7 @@ To get started with this setup, follow these steps:
     sed -i -e 's/theiiird/<your_username>/g' \
        -e '/{ hostname = "nixos-blank"; stateVersion = "24.05"; }/d' \
        -e 's/hostname = "nixos"/hostname = "<your_hostname>"/' \
-       -e 's/stateVersion = "24.05"/stateVersion = "<your_state_version>"/' \
+       -e 's/stateVersion = "24.11"/stateVersion = "<your_state_version>"/' \
        -e 's/homeStateVersion = "24.11";/homeStateVersion = "<your_home_manager_state_version>";/' \
        ~/.nix/flake.nix
     ```
