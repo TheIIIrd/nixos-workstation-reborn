@@ -1,7 +1,12 @@
 { pkgs, config, ... }: {
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [ vpl-gpu-rt ];
+    extraPackages = with pkgs; [
+      cudaPackages.cudatoolkit
+      # cudaPackages.cudnn
+      # cudaPackages.cutensor
+      vpl-gpu-rt
+    ];
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
