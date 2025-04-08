@@ -31,7 +31,7 @@ To get started with this setup, follow these steps:
 
     ```bash
     cd hosts
-    cp -r slim3 <your_hostname>
+    cp -r nixos <your_hostname>
     cd <your_hostname>
     ```
 
