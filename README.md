@@ -31,7 +31,7 @@ To get started with this setup, follow these steps:
 
     ```bash
     cd hosts
-    cp -r slim3 <your_hostname>
+    cp -r nixos <your_hostname>
     cd <your_hostname>
     ```
 
@@ -44,34 +44,34 @@ To get started with this setup, follow these steps:
 5. **Edit `hardware-configuration.nix` for disk mounting if needed**
 
     ```bash
-    vim hardware-configuration.nix
+    nano hardware-configuration.nix
     ```
 
 6. **Edit `hosts/<your_hostname>/local-packages.nix` and `home-manager/home-packages.nix` files if needed**
 
     ```bash
-    vim local-packages.nix
-    vim ../../home-manager/home-packages.nix
+    nano local-packages.nix
+    nano ../../home-manager/home-packages.nix
     ```
 
 7. **Edit `home-manager/modules/git.nix`**
 
     ```bash
-    vim ../../home-manager/modules/git.nix
+    nano ../../home-manager/modules/git.nix
     ```
 
-8. **Edit `nixos/modules/default.nix` and `nixos/modules/graphics/default.nix`**
+8. **Edit `default.nix` files**
 
     ```bash
-    vim ../../nixos/modules/default.nix
-    vim ../../nixos/modules/graphics/default.nix
+    nano ../../nixos/modules/default.nix
+    nano ../../nixos/modules/graphics/default.nix
     ```
 
 9. **Specify the parameters for `nixos/modules/zapret.nix`**
 
     ```bash
     nix-shell -p zapret --command blockcheck
-    vim ../../nixos/modules/zapret.nix
+    nano ../../nixos/modules/zapret.nix
     ```
 
 10. **Finally, edit the `flake.nix` file**
@@ -80,7 +80,7 @@ To get started with this setup, follow these steps:
     sed -i -e 's/theiiird/<your_username>/g' \
        -e '/{ hostname = "nixos-blank"; stateVersion = "24.05"; }/d' \
        -e 's/hostname = "nixos"/hostname = "<your_hostname>"/' \
-       -e 's/stateVersion = "24.05"/stateVersion = "<your_state_version>"/' \
+       -e 's/stateVersion = "24.11"/stateVersion = "<your_state_version>"/' \
        -e 's/homeStateVersion = "24.11";/homeStateVersion = "<your_home_manager_state_version>";/' \
        ~/.nix/flake.nix
     ```
