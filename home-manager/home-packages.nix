@@ -10,7 +10,6 @@
     obsidian
     protonplus
     protontricks
-    qucs-s
     r2modman
     tenacity
     tor-browser

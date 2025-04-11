@@ -13,6 +13,7 @@
     # jetbrains.idea-community-bin
     # jetbrains.pycharm-community-bin
     kdePackages.kdenlive
+    kdePackages.qtstyleplugin-kvantum
     krita
     # mcontrolcenter
 
@@ -38,5 +39,9 @@
     ninja
     rustc
     zulu
+
+    # Other
+    kdePackages.qt6ct
+    libsForQt5.qt5ct
   ];
 }
