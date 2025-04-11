@@ -8,6 +8,7 @@
     kicad
     obs-studio
     obsidian
+    onlyoffice-desktopeditors
     protonplus
     protontricks
     r2modman
