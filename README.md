@@ -2,8 +2,8 @@
 
 This repository is a fork of [Andrey0189's NixOS Config Reborn](https://github.com/Andrey0189/nixos-config-reborn). Welcome to my redesigned NixOS configuration built for efficiency and aesthetics. Right now I'm trying to commit something every day. Let's see how long I can go.
 
-![screenshot](./screenshots/screenshot-gnome-1.png)
-![screenshot](./screenshots/screenshot-kde-1.png)
+![screenshot-nixos-kde](./screenshots/screenshot-kde-1.png)
+![screenshot-nixos-gnome](./screenshots/screenshot-gnome-1.png)
 
 You can still find Andrey0189's old configuration [here](https://github.com/Andrey0189/nixos-config)
 
@@ -137,7 +137,7 @@ To get started with this setup, follow these steps:
 
 ## 😎 Enjoy!
 
-![screenshot](./screenshots/screenshot-gnome-2.png)
+![screenshot-nixos-gnome](./screenshots/screenshot-gnome-2.png)
 
 ## 🤝 Contributions
 
