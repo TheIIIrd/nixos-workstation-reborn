@@ -2,7 +2,6 @@
 
 This repository is a fork of [Andrey0189's NixOS Config Reborn](https://github.com/Andrey0189/nixos-config-reborn). Welcome to my redesigned NixOS configuration built for efficiency and aesthetics. Right now I'm trying to commit something every day. Let's see how long I can go.
 
-![screenshot-nixos-kde](./screenshots/screenshot-kde-1.png)
 ![screenshot-nixos-gnome](./screenshots/screenshot-gnome-1.png)
 
 You can still find Andrey0189's old configuration [here](https://github.com/Andrey0189/nixos-config)
@@ -112,8 +111,8 @@ To get started with this setup, follow these steps:
     # or nixos-install --flake ./#<hostname> if you are installing on a fresh system
     ```
 
+    > Before executing the following command, you need to reboot the system.
     ```bash
-    # reboot your system and run
     nh home switch
     ```
 
@@ -122,6 +121,13 @@ To get started with this setup, follow these steps:
     ```bash
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark com.github.tchx84.Flatseal
+    ```
+
+    > These commands will install and configure flatpack applications in the same way as mine.
+    ```bash
+    flatpak install flathub com.heroicgameslauncher.hgl page.codeberg.libre_menu_editor.LibreMenuEditor ch.tlaun.TL
+    flatpak --user override ch.tlaun.TL --env=TL_BOOTSTRAP_OPTIONS="-Dtl.useForce"
+    flatpak install flathub --system com.dec05eba.gpu_screen_recorder
     ```
 
     ```bash
