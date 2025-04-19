@@ -10,13 +10,14 @@
 
   environment.systemPackages = (with pkgs; [
     okteta
+    transmission_4-qt
     vlc
   ]) ++ (with pkgs.kdePackages; [
     filelight
     kcalc
     kcolorchooser
     kompare
-    ktorrent
+    # ktorrent
     partitionmanager
     yakuake
   ]);

@@ -31,6 +31,7 @@
     mediainfo
     ranger
     ripgrep
+    shellcheck
     silicon
     tldr
     tree
