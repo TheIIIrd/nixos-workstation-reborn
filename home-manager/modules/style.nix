@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     adw-gtk3
-    adwaita-qt
+    # adwaita-qt
     tela-circle-icon-theme
   ];
 
@@ -9,14 +9,6 @@
   #   enable = true;
   #   platformTheme = "qtct";
   #   style.name = "kvantum";
-  # };
-
-  # qt = {
-  #   enable = true;
-  #   platformTheme.name = "adwaita";
-  #   style = {
-  #     name = "adwaita-dark";
-  #   };
   # };
 
   # gtk = {
