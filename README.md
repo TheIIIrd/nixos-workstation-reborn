@@ -4,7 +4,7 @@ This repository is a fork of [Andrey0189's NixOS Config Reborn](https://github.c
 
 ![screenshot-nixos-gnome](./screenshots/screenshot-gnome-1.png)
 
-You can still find Andrey0189's old configuration [here](https://github.com/Andrey0189/nixos-config)
+You can still find Andrey0189's old configuration [here](https://github.com/Andrey0189/nixos-config). More screenshots of NixOS [here](./screenshots).
 
 ## ✨ Features
 
