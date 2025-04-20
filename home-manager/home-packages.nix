@@ -5,13 +5,16 @@
     # Packages in each category are sorted alphabetically
 
     # Desktop apps
+    blockbench
     kicad
     obs-studio
     obsidian
     onlyoffice-desktopeditors
+    # prismlauncher
     protonplus
     protontricks
     r2modman
+    # telegram-desktop
     tenacity
     tor-browser
     ungoogled-chromium
