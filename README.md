@@ -23,6 +23,14 @@ To get started with this setup, follow these steps:
 
 2. **Clone the Repository**
 
+    If you want to try a new installation method (beta version), run these commands:
+    ```bash
+    git clone https://github.com/TheIIIrd/nixos-workstation-reborn.git
+    cd nixos-workstation-reborn
+    chmod +x setup_before_reboot.sh setup_after_reboot.sh
+    bash ./setup_before_reboot.sh
+    ```
+
     ```bash
     git clone https://github.com/TheIIIrd/nixos-workstation-reborn.git ~/.nix && cd ~/.nix
     ```
@@ -111,7 +119,7 @@ To get started with this setup, follow these steps:
     # or nixos-install --flake ./#<hostname> if you are installing on a fresh system
     ```
 
-    > Before executing the following command, you need to reboot the system.
+    Before executing the following command, you need to reboot the system:
     ```bash
     nh home switch
     ```
@@ -123,7 +131,7 @@ To get started with this setup, follow these steps:
     flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark com.github.tchx84.Flatseal
     ```
 
-    > These commands will install and configure flatpack applications in the same way as mine.
+    These commands will install and configure flatpack applications in the same way as mine:
     ```bash
     flatpak install flathub com.heroicgameslauncher.hgl page.codeberg.libre_menu_editor.LibreMenuEditor ch.tlaun.TL
     flatpak --user override ch.tlaun.TL --env=TL_BOOTSTRAP_OPTIONS="-Dtl.useForce"
@@ -137,8 +145,7 @@ To get started with this setup, follow these steps:
 13. **Copy corefonts to the home directory**
 
     ```bash
-    # the path to corefonts-1 may vary
-    cp --no-preserve=mode /nix/store/ciwacrng6v01ih6hl4x6db39k4m41add-corefonts-1/share/fonts/truetype/* ~/.local/share/fonts
+    cp --no-preserve=mode /nix/store/*-corefonts-1/share/fonts/truetype/* ~/.local/share/fonts
     ```
 
 ## 😎 Enjoy!
