@@ -13,8 +13,10 @@ function echo_error {
 
 # Checking for nh
 if command -v nh >/dev/null 2>&1; then
-    echo_info "Starting nh home switch..."
+    echo_info "Starting nh..."
+    # nh os switch --update
     nh home switch
+    nix store optimise
 else
     echo_info "nh is not installed. Skipping nh home switch."
 fi
