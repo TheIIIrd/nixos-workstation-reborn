@@ -72,11 +72,11 @@ nano local-packages.nix
 nano ../../home-manager/home-packages.nix
 nano ../../home-manager/modules/git.nix
 nano ../../nixos/modules/default.nix
-nano ../../nixos/modules/desktop.default.nix
-nano ../../nixos/modules/graphics.default.nix
+nano ../../nixos/modules/desktop/default.nix
+nano ../../nixos/modules/graphics/default.nix
 
 # Prompt to run blockcheck
-read -r -p "Do you want to run blockcheck? (Y/n) [y]: " run_blockcheck
+read -r -p "Do you want to run zapret blockcheck? (Y/n) [y]: " run_blockcheck
 run_blockcheck="${run_blockcheck:-y}"
 
 if [[ "$run_blockcheck" =~ ^[Yy]$ ]]; then
