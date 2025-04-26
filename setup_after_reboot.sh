@@ -56,4 +56,4 @@ fi
 # Copying the fonts
 cp --no-preserve=mode /nix/store/*-corefonts-1/share/fonts/truetype/* "$fonts_dir"
 
-echo_info "Setup completed! Please reboot the system for the changes to take effect."
+echo_info "Setup completed! Please reboot the system for the changes to take effect. In the future, to update the system, use 'upd && hms'."
