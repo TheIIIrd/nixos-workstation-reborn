@@ -49,7 +49,10 @@ cd "$repo_dir"
 
 # Copying configuration for the new host
 echo_info "Copying configuration for host $hostname..."
-cp -r hosts/nixos "hosts/$hostname"
+if [ ! -d "$hostname" ]; then
+    cp -r hosts/nixos "hosts/$hostname"
+fi
+
 cd "hosts/$hostname"
 
 # Copying hardware-configuration.nix
@@ -72,6 +75,7 @@ nano local-packages.nix
 nano ../../home-manager/home-packages.nix
 nano ../../home-manager/modules/git.nix
 nano ../../nixos/modules/default.nix
+nano ../../nixos/modules/boot.nix
 nano ../../nixos/modules/desktop/default.nix
 nano ../../nixos/modules/graphics/default.nix
 
