@@ -72,6 +72,7 @@ To get started with this setup, follow these steps:
 
     ```bash
     nano ../../nixos/modules/default.nix
+    nano ../../nixos/modules/boot/default.nix
     nano ../../nixos/modules/desktop/default.nix
     nano ../../nixos/modules/graphics/default.nix
     ```

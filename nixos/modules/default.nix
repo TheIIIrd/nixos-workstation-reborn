@@ -3,7 +3,7 @@
     # ./amnezia.nix
     ./audio.nix
     ./bluetooth.nix
-    ./boot.nix
+    ./boot
     ./desktop
     ./env.nix
     ./firefox.nix
