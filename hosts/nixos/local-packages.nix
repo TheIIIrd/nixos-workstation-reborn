@@ -16,6 +16,7 @@
     kdePackages.qtstyleplugin-kvantum
     krita
     # mcontrolcenter
+    # woeusb-ng
 
     # CLI utils
     aria2

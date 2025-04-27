@@ -75,7 +75,7 @@ nano local-packages.nix
 nano ../../home-manager/home-packages.nix
 nano ../../home-manager/modules/git.nix
 nano ../../nixos/modules/default.nix
-nano ../../nixos/modules/boot.nix
+nano ../../nixos/modules/boot/default.nix
 nano ../../nixos/modules/desktop/default.nix
 nano ../../nixos/modules/graphics/default.nix
 
