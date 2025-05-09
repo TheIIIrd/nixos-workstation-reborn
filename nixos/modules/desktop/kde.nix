@@ -17,7 +17,7 @@
     kcalc
     kcolorchooser
     kompare
-    # ktorrent
+    merkuro
     partitionmanager
     yakuake
   ]);
