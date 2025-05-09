@@ -9,12 +9,11 @@
     gparted
     # gpu-screen-recorder-gtk
     # gpu-screen-recorder
-    inkscape
     # jetbrains.idea-community-bin
     # jetbrains.pycharm-community-bin
     kdePackages.kdenlive
     kdePackages.qtstyleplugin-kvantum
-    krita
+    mangohud
     # mcontrolcenter
     # woeusb-ng
 

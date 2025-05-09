@@ -6,7 +6,9 @@
 
     # Desktop apps
     blockbench
+    inkscape
     kicad
+    krita
     obs-studio
     obsidian
     onlyoffice-desktopeditors
@@ -22,23 +24,18 @@
     vscodium
 
     # CLI utils
-    bc
     binwalk
     fastfetch
     ffmpeg
     file
     fzf
-    git
     git-graph
-    lazygit
     mediainfo
-    ranger
     ripgrep
     shellcheck
     silicon
     tldr
     tree
-    ueberzugpp
     unzip
     zip
 
@@ -54,12 +51,10 @@
 
     # Fonts
     corefonts
-    dejavu_fonts
     jetbrains-mono
     meslo-lgs-nf
     noto-fonts
     noto-fonts-lgc-plus
-    texlivePackages.hebrew-fonts
     noto-fonts-emoji
     font-awesome
     powerline-fonts
