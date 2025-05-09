@@ -5,6 +5,8 @@
       cudaPackages.cudatoolkit
       # cudaPackages.cudnn
       # cudaPackages.cutensor
+      intel-media-driver
+      nvidia-vaapi-driver
       vpl-gpu-rt
     ];
   };

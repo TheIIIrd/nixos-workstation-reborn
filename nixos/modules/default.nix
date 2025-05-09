@@ -16,6 +16,7 @@
     ./net.nix
     ./nh.nix
     ./nix.nix
+    ./obs.nix
     ./printing.nix
     # ./spice.nix
     ./steam.nix

@@ -9,7 +9,6 @@
     inkscape
     kicad
     krita
-    obs-studio
     obsidian
     onlyoffice-desktopeditors
     # prismlauncher

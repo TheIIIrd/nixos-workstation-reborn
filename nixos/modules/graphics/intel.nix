@@ -1,6 +1,9 @@
 { pkgs, config, ... }: {
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [ vpl-gpu-rt ];
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vpl-gpu-rt
+    ];
   };
 }
