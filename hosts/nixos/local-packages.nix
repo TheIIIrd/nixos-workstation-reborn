@@ -24,8 +24,8 @@
     htop
     ipset
     lshw
-    # libva
-    # libva-utils
+    libva-utils
+    libva
     nmap
     radare2
     wget
