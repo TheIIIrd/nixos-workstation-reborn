@@ -19,11 +19,11 @@
 
   environment.systemPackages = (with pkgs; [
     amberol
-    cambalache
+    # cambalache
     clapper
     dconf-editor
     fragments
-    gnome-builder
+    # gnome-builder
     gnome-tweaks
     mission-center
     ptyxis
