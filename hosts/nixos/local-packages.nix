@@ -27,6 +27,7 @@
     libva-utils
     libva
     nmap
+    # ntfs3g
     radare2
     wget
 
