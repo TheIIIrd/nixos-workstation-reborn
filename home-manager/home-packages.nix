@@ -33,6 +33,7 @@
     ripgrep
     shellcheck
     silicon
+    texliveTeTeX
     tldr
     tree
     unzip
