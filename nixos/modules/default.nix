@@ -8,6 +8,7 @@
     ./env.nix
     ./firefox.nix
     ./flatpak.nix
+    ./fwupd.nix
     ./graphics
     ./home-manager.nix
     ./kernel.nix
