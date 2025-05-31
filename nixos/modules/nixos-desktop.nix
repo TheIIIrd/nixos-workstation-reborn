@@ -5,6 +5,7 @@
     # Core utilities
     ./base/amnezia.nix
     ./base/audio.nix
+    # ./base/bluetooth.nix
     ./base/env.nix
     ./base/firefox.nix
     ./base/firejail.nix
@@ -24,6 +25,7 @@
     ./base/trim.nix
     ./base/user.nix
     ./base/virt-manager.nix
+    # ./base/yggdrasil.nix
     ./base/zapret.nix
     ./base/zerotierone.nix
     ./base/zram.nix
