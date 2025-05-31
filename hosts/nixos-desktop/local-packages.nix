@@ -14,7 +14,7 @@
     kitty
     mangohud
     # mcontrolcenter
-    # woeusb-ng
+    woeusb-ng
 
     # CLI utils
     aria2
@@ -26,7 +26,7 @@
     libva-utils
     libva
     nmap
-    # ntfs3g
+    ntfs3g
     radare2
     wget
 

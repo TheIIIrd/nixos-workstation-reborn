@@ -40,7 +40,7 @@
     gst_all_1.gst-vaapi
 
     # Coding stuff
-    android-tools
+    # android-tools
     # cargo
     clang
     clang-tools
