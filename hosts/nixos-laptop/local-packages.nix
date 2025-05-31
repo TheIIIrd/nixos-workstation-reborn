@@ -13,7 +13,7 @@
     kdePackages.qtstyleplugin-kvantum
     kitty
     mangohud
-    # mcontrolcenter
+    mcontrolcenter
     # woeusb-ng
 
     # CLI utils
