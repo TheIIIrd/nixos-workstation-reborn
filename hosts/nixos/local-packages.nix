@@ -9,10 +9,10 @@
     gparted
     # jetbrains.idea-community-bin
     # jetbrains.pycharm-community-bin
-    kdePackages.kdenlive
+    # kdePackages.kdenlive
     kdePackages.qtstyleplugin-kvantum
     kitty
-    mangohud
+    # mangohud
     # mcontrolcenter
     # woeusb-ng
 
@@ -25,9 +25,9 @@
     lshw
     libva-utils
     libva
-    nmap
+    # nmap
     # ntfs3g
-    radare2
+    # radare2
     wget
 
     # GStreamer
@@ -41,15 +41,15 @@
 
     # Coding stuff
     android-tools
-    cargo
+    # cargo
     clang
     clang-tools
     cmake
     gcc
     gnumake
     ninja
-    rustc
-    zulu
+    # rustc
+    # zulu
 
     # Other
     kdePackages.qt6ct
