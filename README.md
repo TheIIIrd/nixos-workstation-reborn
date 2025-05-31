@@ -137,7 +137,6 @@ To get started with this setup, follow these steps:
     ```bash
     flatpak install flathub com.heroicgameslauncher.hgl page.codeberg.libre_menu_editor.LibreMenuEditor ch.tlaun.TL
     flatpak --user override ch.tlaun.TL --env=TL_BOOTSTRAP_OPTIONS="-Dtl.useForce"
-    flatpak install flathub --system com.dec05eba.gpu_screen_recorder
     ```
 
     ```bash
@@ -147,6 +146,7 @@ To get started with this setup, follow these steps:
 13. **Copy corefonts to the home directory**
 
     ```bash
+    mkdir -p ~/.local/share/fonts
     cp --no-preserve=mode /nix/store/*-corefonts-1/share/fonts/truetype/* ~/.local/share/fonts
     ```
 
