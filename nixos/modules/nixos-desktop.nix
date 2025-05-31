@@ -28,7 +28,7 @@
     # ./base/yggdrasil.nix
     ./base/zapret.nix
     ./base/zerotierone.nix
-    ./base/zram.nix
+    # ./base/zram.nix
 
     # Bootloaders
     ./boot/systemd-boot.nix
