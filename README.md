@@ -29,6 +29,7 @@ To get started with this setup, follow these steps:
     cd nixos-workstation-reborn
     chmod +x setup_before_reboot.sh setup_after_reboot.sh
     bash ./setup_before_reboot.sh
+    bash ./setup_after_reboot.sh
     ```
 
     ```bash
@@ -71,17 +72,17 @@ To get started with this setup, follow these steps:
 8. **Edit `default.nix` files**
 
     ```bash
-    nano ../../nixos/modules/default.nix
+    nano ../../nixos/modules/base/default.nix
     nano ../../nixos/modules/boot/default.nix
     nano ../../nixos/modules/desktop/default.nix
     nano ../../nixos/modules/graphics/default.nix
     ```
 
-9. **Specify the parameters for `nixos/modules/zapret.nix`**
+9. **Specify the parameters for `nixos/modules/base/zapret.nix`**
 
     ```bash
     nix-shell -p zapret --command blockcheck
-    nano ../../nixos/modules/zapret.nix
+    nano ../../nixos/modules/base/zapret.nix
     ```
 
 10. **Finally, edit the `flake.nix` file**
@@ -125,7 +126,7 @@ To get started with this setup, follow these steps:
     nh home switch
     ```
 
-12. **Configure Flatpak and gnome keybindings switch-input-source if needed**
+12. **Configure flatpak and gnome keybindings switch-input-source if needed**
 
     ```bash
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo

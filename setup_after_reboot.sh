@@ -35,8 +35,7 @@ else
 fi
 
 # Checking if the standard environment is GNOME
-desktop_file="$HOME/.nix/nixos/modules/desktop/default.nix"
-if grep -q '^\s*./gnome.nix' "$desktop_file" && [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then
+if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then
     echo_info "Setting up GNOME keybindings..."
     gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L']"
 else
