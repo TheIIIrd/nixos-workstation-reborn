@@ -7,8 +7,6 @@
     # Desktop apps
     easyeffects
     gparted
-    # gpu-screen-recorder-gtk
-    # gpu-screen-recorder
     # jetbrains.idea-community-bin
     # jetbrains.pycharm-community-bin
     kdePackages.kdenlive
