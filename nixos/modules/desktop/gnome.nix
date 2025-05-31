@@ -29,14 +29,14 @@
   ]) ++ (with pkgs.gnomeExtensions; [
     appindicator
     # arcmenu
-    # blur-my-shell
+    blur-my-shell
     # burn-my-windows
-    # caffeine
+    caffeine
     clipboard-indicator
     # compiz-windows-effect
     # dash-to-panel
     just-perfection
     # quick-lang-switch
-    # vitals
+    vitals
   ]);
 }
