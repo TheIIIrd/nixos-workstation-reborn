@@ -23,9 +23,8 @@
     kcalc
     kcolorchooser
     kompare
-    merkuro
+    # merkuro
     partitionmanager
     sddm-kcm
-    yakuake
   ]);
 }

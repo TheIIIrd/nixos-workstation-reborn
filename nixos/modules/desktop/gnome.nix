@@ -18,7 +18,6 @@
   ];
 
   environment.systemPackages = (with pkgs; [
-    # amberol
     # cambalache
     clapper
     dconf-editor
