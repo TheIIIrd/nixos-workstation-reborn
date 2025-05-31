@@ -1,6 +1,6 @@
 {
   environment.sessionVariables = rec {
-    TERMINAL = "ptyxis";
+    TERMINAL = "kitty";
     EDITOR = "nvim";
     XDG_BIN_HOME = "$HOME/.local/bin";
     PATH = [
