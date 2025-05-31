@@ -34,7 +34,7 @@
     ./boot/systemd-boot.nix
 
     # Desktop environments
-    ./desktop/kde.nix
+    ./desktop/gnome.nix
     ./desktop/xserver.nix
 
     # GPUs
