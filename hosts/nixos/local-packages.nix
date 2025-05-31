@@ -13,6 +13,7 @@
     # jetbrains.pycharm-community-bin
     kdePackages.kdenlive
     kdePackages.qtstyleplugin-kvantum
+    kitty
     mangohud
     # mcontrolcenter
     # woeusb-ng

@@ -7,7 +7,9 @@
     ./desktop
     ./env.nix
     ./firefox.nix
+    # ./firejail.nix
     ./flatpak.nix
+    ./fwupd.nix
     ./graphics
     ./home-manager.nix
     ./kernel.nix
@@ -16,7 +18,7 @@
     ./net.nix
     ./nh.nix
     ./nix.nix
-    ./obs.nix
+    # ./obs.nix
     ./printing.nix
     # ./spice.nix
     ./steam.nix
