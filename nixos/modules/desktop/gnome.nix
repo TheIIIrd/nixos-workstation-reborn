@@ -21,6 +21,7 @@
     # cambalache
     clapper
     dconf-editor
+    eyedropper
     fragments
     # gnome-builder
     gnome-tweaks
@@ -30,7 +31,7 @@
     appindicator
     # arcmenu
     blur-my-shell
-    # burn-my-windows
+    burn-my-windows
     caffeine
     clipboard-indicator
     # compiz-windows-effect
