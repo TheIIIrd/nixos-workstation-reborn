@@ -27,9 +27,8 @@ if command -v flatpak >/dev/null 2>&1; then
     echo_info "Setting up Flatpak..."
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak install -y org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark
-    flatpak install -y flathub com.github.tchx84.Flatseal com.heroicgameslauncher.hgl page.codeberg.libre_menu_editor.LibreMenuEditor ch.tlaun.TL
+    flatpak install -y flathub ch.tlaun.TL com.github.tchx84.Flatseal com.heroicgameslauncher.hgl page.codeberg.libre_menu_editor.LibreMenuEditor
     flatpak --user override ch.tlaun.TL --env=TL_BOOTSTRAP_OPTIONS="-Dtl.useForce"
-    flatpak install -y flathub --system com.dec05eba.gpu_screen_recorder
 else
     echo_info "Flatpak is not installed. Skipping Flatpak setup."
 fi
