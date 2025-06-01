@@ -74,7 +74,7 @@ echo_info "Editing other configuration files..."
 nano local-packages.nix
 nano ../../home-manager/home-packages.nix
 nano ../../home-manager/modules/git.nix
-nano ../../nixos/modules/default.nix
+nano ../../nixos/modules/base/default.nix
 nano ../../nixos/modules/boot/default.nix
 nano ../../nixos/modules/desktop/default.nix
 nano ../../nixos/modules/graphics/default.nix
@@ -88,7 +88,7 @@ if [[ "$run_blockcheck" =~ ^[Yy]$ ]]; then
 fi
 
 # Opening zapret.nix in nano
-nano ../../nixos/modules/zapret.nix
+nano ../../nixos/modules/base/zapret.nix
 
 # System rebuild
 echo_info "Starting system rebuild..."

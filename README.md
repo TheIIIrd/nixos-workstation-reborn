@@ -29,6 +29,7 @@ To get started with this setup, follow these steps:
     cd nixos-workstation-reborn
     chmod +x setup_before_reboot.sh setup_after_reboot.sh
     bash ./setup_before_reboot.sh
+    # run bash ./setup_after_reboot.sh after first steps
     ```
 
     ```bash
@@ -71,17 +72,17 @@ To get started with this setup, follow these steps:
 8. **Edit `default.nix` files**
 
     ```bash
-    nano ../../nixos/modules/default.nix
+    nano ../../nixos/modules/base/default.nix
     nano ../../nixos/modules/boot/default.nix
     nano ../../nixos/modules/desktop/default.nix
     nano ../../nixos/modules/graphics/default.nix
     ```
 
-9. **Specify the parameters for `nixos/modules/zapret.nix`**
+9. **Specify the parameters for `nixos/modules/base/zapret.nix`**
 
     ```bash
     nix-shell -p zapret --command blockcheck
-    nano ../../nixos/modules/zapret.nix
+    nano ../../nixos/modules/base/zapret.nix
     ```
 
 10. **Finally, edit the `flake.nix` file**
@@ -125,18 +126,17 @@ To get started with this setup, follow these steps:
     nh home switch
     ```
 
-12. **Configure Flatpak and gnome keybindings switch-input-source if needed**
+12. **Configure flatpak and gnome keybindings switch-input-source if needed**
 
     ```bash
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark com.github.tchx84.Flatseal
+    flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark
     ```
 
     These commands will install and configure flatpack applications in the same way as mine:
     ```bash
-    flatpak install flathub com.heroicgameslauncher.hgl page.codeberg.libre_menu_editor.LibreMenuEditor ch.tlaun.TL
+    flatpak install flathub ch.tlaun.TL com.github.tchx84.Flatseal com.heroicgameslauncher.hgl page.codeberg.libre_menu_editor.LibreMenuEditor
     flatpak --user override ch.tlaun.TL --env=TL_BOOTSTRAP_OPTIONS="-Dtl.useForce"
-    flatpak install flathub --system com.dec05eba.gpu_screen_recorder
     ```
 
     ```bash
@@ -146,6 +146,7 @@ To get started with this setup, follow these steps:
 13. **Copy corefonts to the home directory**
 
     ```bash
+    mkdir -p ~/.local/share/fonts
     cp --no-preserve=mode /nix/store/*-corefonts-1/share/fonts/truetype/* ~/.local/share/fonts
     ```
 
