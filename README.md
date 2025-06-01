@@ -130,12 +130,12 @@ To get started with this setup, follow these steps:
 
     ```bash
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark com.github.tchx84.Flatseal
+    flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark
     ```
 
     These commands will install and configure flatpack applications in the same way as mine:
     ```bash
-    flatpak install flathub com.heroicgameslauncher.hgl page.codeberg.libre_menu_editor.LibreMenuEditor ch.tlaun.TL
+    flatpak install flathub ch.tlaun.TL com.github.tchx84.Flatseal com.heroicgameslauncher.hgl page.codeberg.libre_menu_editor.LibreMenuEditor
     flatpak --user override ch.tlaun.TL --env=TL_BOOTSTRAP_OPTIONS="-Dtl.useForce"
     ```
 
