@@ -29,7 +29,7 @@ To get started with this setup, follow these steps:
     cd nixos-workstation-reborn
     chmod +x setup_before_reboot.sh setup_after_reboot.sh
     bash ./setup_before_reboot.sh
-    bash ./setup_after_reboot.sh
+    # run bash ./setup_after_reboot.sh after first steps
     ```
 
     ```bash
