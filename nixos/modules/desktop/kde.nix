@@ -20,10 +20,11 @@
     vlc
   ]) ++ (with pkgs.kdePackages; [
     filelight
+    isoimagewriter
     kcalc
     kcolorchooser
     kompare
-    # merkuro
+    merkuro
     partitionmanager
     sddm-kcm
   ]);

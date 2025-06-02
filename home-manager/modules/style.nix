@@ -1,14 +1,13 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     adw-gtk3
-    adwaita-qt
     tela-circle-icon-theme
   ];
 
   qt = {
     enable = true;
-    platformTheme.name = "qtct";
-    style.name = "kvantum";
+    platformTheme.name = "kde6";
+    style.name = "breeze";
   };
 
   # gtk = {
