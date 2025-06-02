@@ -36,6 +36,7 @@
     texliveTeTeX
     tldr
     tree
+    ueberzugpp
     unzip
     zip
 

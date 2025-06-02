@@ -10,7 +10,7 @@
     # jetbrains.idea-community-bin
     # jetbrains.pycharm-community-bin
     # kdePackages.kdenlive
-    kdePackages.qtstyleplugin-kvantum
+    # kdePackages.qtstyleplugin-kvantum
     kitty
     # mangohud
     # mcontrolcenter
@@ -52,7 +52,7 @@
     # zulu
 
     # Other
-    kdePackages.qt6ct
-    libsForQt5.qt5ct
+    # kdePackages.qt6ct
+    # libsForQt5.qt5ct
   ];
 }
