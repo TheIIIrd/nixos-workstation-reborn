@@ -16,6 +16,7 @@
       "--wssize 1:6"
       "--dpi-desync-fake-tls=0x00000000"
       "--dpi-desync-any-protocol"
+      "--dpi-desync-cutoff=128"
     ];
   };
 }
