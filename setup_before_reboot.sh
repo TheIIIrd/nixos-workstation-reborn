@@ -80,8 +80,8 @@ nano ../../nixos/modules/desktop/default.nix
 nano ../../nixos/modules/graphics/default.nix
 
 # Prompt to run blockcheck
-read -r -p "Do you want to run zapret blockcheck? (Y/n) [y]: " run_blockcheck
-run_blockcheck="${run_blockcheck:-y}"
+read -r -p "Do you want to run zapret blockcheck? (y/N): " run_blockcheck
+run_blockcheck="${run_blockcheck:-n}"
 
 if [[ "$run_blockcheck" =~ ^[Yy]$ ]]; then
     nix-shell -p zapret --command blockcheck

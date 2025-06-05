@@ -54,4 +54,19 @@ fi
 # Copying the fonts
 cp --no-preserve=mode /nix/store/*-corefonts-1/share/fonts/truetype/* "$fonts_dir"
 
+# Prompting for folder creation
+read -r -p "Do you want to create folders like the project developer? (y/N): " create_folders
+create_folders="${create_folders:-n}"
+
+if [[ "$create_folders" =~ ^[Yy]$ ]]; then
+    echo_info "Creating folders..."
+    mkdir -p ~/BitLab/CreationLab/{ArtStore,CodeStore/{ArcLab,CppLab,CsLab,PyLab,RsLab},DataStore,PcbStore} \
+             ~/BitLab/GameLab/HeroicLab/Prefixes/default \
+             ~/BitLab/VirtualLab/{EngineLab,SysImages} \
+             ~/BitLab/WorkBench
+    echo_info "Folders created successfully."
+else
+    echo_info "Folders will not be created."
+fi
+
 echo_info "Setup completed! Please reboot the system for the changes to take effect. In the future, to update the system, use 'upd && hms'."
