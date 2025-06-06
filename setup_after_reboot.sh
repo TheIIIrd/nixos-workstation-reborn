@@ -87,10 +87,7 @@ function setup_flatpak {
     fi
 
     echo_info "Adding Flathub repository..."
-    if ! flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo; then
-        echo_error "Failed to add Flathub repository!"
-        return 1
-    fi
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
     flatpak install -y org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark 2>/dev/null || echo_warn "Failed to install GTK themes"
 
