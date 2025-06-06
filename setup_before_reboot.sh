@@ -90,7 +90,6 @@ function setup_repository {
             echo_info "Available branches:"
             git branch -a
 
-            # Безопасный ввод имени ветки
             echo_question "Enter branch name to switch to (e.g., main, gen-v2): "
             read -r branch_name
             if git checkout "$branch_name" 2>/dev/null; then
@@ -168,12 +167,44 @@ function edit_zapret_config {
     nano "$repo_dir/nixos/modules/base/zapret.nix"
 }
 
+
+function clean_repository {
+    local repo_dir="$HOME/.nix"
+    cd "$repo_dir" || return 1
+
+    if ask_confirmation "Remove Git-related files (.git, .gitignore)?"; then
+        echo_info "Removing Git files..."
+        rm -rf .git .gitignore
+    fi
+
+    if [ -d "screenshots" ]; then
+        if ask_confirmation "Remove screenshots directory?"; then
+            echo_info "Removing screenshots..."
+            rm -rf screenshots
+        fi
+    fi
+
+    if [ -f "flake.lock" ]; then
+        if ask_confirmation "Remove flake.lock file?"; then
+            echo_info "Removing flake.lock..."
+            rm -f flake.lock
+        fi
+    fi
+}
+
 function rebuild_system {
     local repo_dir="$HOME/.nix"
 
+    if ask_confirmation "Clean repository before rebuild?"; then
+        clean_repository
+    fi
+
     echo_info "Staging changes in git..."
     cd "$repo_dir" || { echo_error "Failed to enter repository directory"; exit 1; }
-    git add .
+
+    if [ -d ".git" ]; then
+        git add .
+    fi
 
     echo_info "Rebuilding system configuration..."
     sudo nixos-rebuild boot --flake "./#$hostname"
