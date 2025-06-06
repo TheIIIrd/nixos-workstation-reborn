@@ -41,7 +41,7 @@ function ask_confirmation {
 function execute_with_confirmation {
     local description="$1"
     local command="$2"
-    
+
     if ask_confirmation "$description"; then
         echo_info "Executing: $command"
         eval "$command"
@@ -52,16 +52,16 @@ function execute_with_confirmation {
 
 function uncomment_gtk_settings {
     local style_file="$HOME/.nix/home-manager/modules/style.nix"
-    
+
     if [[ ! -f "$style_file" ]]; then
         echo_error "Style.nix not found at $style_file"
         return 1
     fi
 
     echo_info "Uncommenting GTK settings in style.nix..."
-    
+
     cp "$style_file" "${style_file}.bak"
-    
+
     sed -i -e "s/^  # gtk = {/  gtk = {/" \
            -e "s/^  #   enable = true;/    enable = true;/" \
            -e "s/^  #   theme = {/    theme = {/" \
@@ -72,7 +72,7 @@ function uncomment_gtk_settings {
            -e "s/^  #   };/    };/" \
            -e "s/^  # };/  };/" \
            "$style_file"
-    
+
     echo_info "GTK settings uncommented successfully."
 }
 
@@ -127,7 +127,7 @@ function setup_fonts {
     if ask_confirmation "Copy corefonts to ~/.local/share/fonts?"; then
         fonts_dir="$HOME/.local/share/fonts"
         [[ ! -d "$fonts_dir" ]] && mkdir -p "$fonts_dir"
-        
+
         if cp --no-preserve=mode /nix/store/*-corefonts-1/share/fonts/truetype/* "$fonts_dir" 2>/dev/null; then
             echo_info "Fonts copied successfully."
         else
@@ -156,7 +156,7 @@ function main {
                 uncomment_gtk_settings
             fi
         fi
-        
+
         execute_with_confirmation "Run nh home switch?" "nh home switch"
         execute_with_confirmation "Optimize nix store?" "nix store optimise"
     fi
@@ -167,7 +167,7 @@ function main {
     setup_folder_structure
 
     echo_info "Setup completed!"
-    
+
     if ask_confirmation "Reboot the system now?"; then
         echo_info "Rebooting..."
         sudo reboot

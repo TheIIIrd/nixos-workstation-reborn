@@ -66,21 +66,47 @@ function get_config_values {
 
 function setup_repository {
     local repo_dir="$HOME/.nix"
-    
+
     if [ ! -d "$repo_dir" ]; then
         echo_info "Cloning the repository..."
         git clone https://github.com/TheIIIrd/nixos-workstation-reborn.git "$repo_dir"
+        cd "$repo_dir"
+
+        if ask_confirmation "Switch to gen-v2 branch?"; then
+            echo_info "Switching to gen-v2 branch..."
+            git checkout gen-v2
+        else
+            echo_info "Keeping main branch"
+        fi
     else
         echo_info "Updating existing repository..."
         cd "$repo_dir"
         git pull
+
+        current_branch=$(git branch --show-current)
+        echo_info "Current branch: $current_branch"
+
+        if ask_confirmation "Would you like to switch branches?"; then
+            echo_info "Available branches:"
+            git branch -a
+
+            # Безопасный ввод имени ветки
+            echo_question "Enter branch name to switch to (e.g., main, gen-v2): "
+            read -r branch_name
+            if git checkout "$branch_name" 2>/dev/null; then
+                echo_info "Switched to $branch_name branch"
+                git pull
+            else
+                echo_error "Branch $branch_name not found!"
+            fi
+        fi
     fi
 }
 
 function configure_host {
     local hostname="$1"
     local repo_dir="$HOME/.nix"
-    
+
     cd "$repo_dir/hosts" || { echo_error "Failed to enter hosts directory"; exit 1; }
 
     if [ ! -d "$hostname" ]; then
@@ -97,7 +123,7 @@ function configure_host {
 function edit_flake {
     local repo_dir="$HOME/.nix"
     local flake_file="$repo_dir/flake.nix"
-    
+
     echo_info "Configuring flake.nix..."
     sed -i -e "s/theiiird/$username/g" \
            -e "/{ hostname = \"nixos-blank\"; stateVersion = \"24.05\"; }/d" \
@@ -109,7 +135,7 @@ function edit_flake {
 
 function edit_config_files {
     local repo_dir="$HOME/.nix"
-    
+
     echo_info "Opening configuration files for editing..."
     local files_to_edit=(
         "local-packages.nix"
@@ -144,7 +170,7 @@ function edit_zapret_config {
 
 function rebuild_system {
     local repo_dir="$HOME/.nix"
-    
+
     echo_info "Staging changes in git..."
     cd "$repo_dir" || { echo_error "Failed to enter repository directory"; exit 1; }
     git add .
