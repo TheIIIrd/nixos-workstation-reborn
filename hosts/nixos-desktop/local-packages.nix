@@ -10,8 +10,8 @@
     # jetbrains.idea-community-bin
     # jetbrains.pycharm-community-bin
     kdePackages.kdenlive
-    # kdePackages.qtstyleplugin-kvantum
     kitty
+    librewolf
     mangohud
     # mcontrolcenter
     woeusb-ng
