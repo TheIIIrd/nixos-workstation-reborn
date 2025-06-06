@@ -7,7 +7,7 @@
     ./base/audio.nix
     # ./base/bluetooth.nix
     ./base/env.nix
-    ./base/firefox.nix
+    # ./base/firefox.nix
     ./base/firejail.nix
     ./base/flatpak.nix
     ./base/fwupd.nix

@@ -4,7 +4,7 @@
     ./audio.nix
     ./bluetooth.nix
     ./env.nix
-    ./firefox.nix
+    # ./firefox.nix
     # ./firejail.nix
     ./flatpak.nix
     ./fwupd.nix
@@ -16,7 +16,7 @@
     ./nh.nix
     ./nix.nix
     # ./obs.nix
-    ./printing.nix
+    # ./printing.nix
     # ./spice.nix
     ./steam.nix
     ./timezone.nix

@@ -26,6 +26,7 @@
     kompare
     merkuro
     partitionmanager
+    # qtstyleplugin-kvantum
     sddm-kcm
   ]);
 }
