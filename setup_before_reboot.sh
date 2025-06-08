@@ -64,6 +64,28 @@ function get_config_values {
     declare -g username hostname state_version home_manager_state_version
 }
 
+function choose_template {
+    echo_question "Choose configuration template:"
+    echo "1) Manual configuration (nixos)"
+    echo "2) Desktop template (nixos-desktop)"
+    echo "3) Laptop template (nixos-laptop)"
+
+    while true; do
+        read -r -p "$(echo_question "Enter your choice [1]: ")" choice
+        choice="${choice:-1}"
+
+        case "$choice" in
+            1) template="nixos"; break ;;
+            2) template="nixos-desktop"; break ;;
+            3) template="nixos-laptop"; break ;;
+            *) echo_error "Invalid choice. Please enter 1, 2 or 3." ;;
+        esac
+    done
+
+    echo_info "Selected template: $template"
+    declare -g template
+}
+
 function setup_repository {
     local repo_dir="$HOME/.nix"
 
@@ -102,16 +124,69 @@ function setup_repository {
     fi
 }
 
+function backup_existing_host {
+    local hostname="$1"
+    local repo_dir="$HOME/.nix/hosts"
+    local backup_count=1
+    local backup_dir="${hostname}.backup-${backup_count}"
+
+    # Find next available backup directory name
+    while [ -d "$repo_dir/$backup_dir" ]; do
+        backup_count=$((backup_count + 1))
+        backup_dir="${hostname}.backup-${backup_count}"
+    done
+
+    echo_info "Backing up existing configuration to $backup_dir"
+    mv "$repo_dir/$hostname" "$repo_dir/$backup_dir"
+}
+
 function configure_host {
     local hostname="$1"
+    local template="$2"
     local repo_dir="$HOME/.nix"
 
     cd "$repo_dir/hosts" || { echo_error "Failed to enter hosts directory"; exit 1; }
 
-    if [ ! -d "$hostname" ]; then
-        echo_info "Creating configuration for host $hostname..."
-        cp -r nixos "$hostname"
+    # Backup existing configuration if it exists
+    if [ -d "$hostname" ]; then
+        echo_warn "Configuration for $hostname already exists!"
+        if ask_confirmation "Backup existing configuration?"; then
+            backup_existing_host "$hostname"
+        else
+            if ask_confirmation "Overwrite existing configuration?"; then
+                echo_info "Removing existing configuration..."
+                rm -rf "$hostname"
+            else
+                echo_error "Configuration aborted by user"
+                exit 1
+            fi
+        fi
     fi
+
+    # Check if template exists, otherwise use fallback
+    if [ ! -d "$template" ]; then
+        echo_warn "Template $template not found! Using fallback templates..."
+
+        # Try to find any available template
+        local fallback_template=""
+        for t in nixos nixos-desktop nixos-laptop; do
+            if [ -d "$t" ]; then
+                fallback_template="$t"
+                break
+            fi
+        done
+
+        if [ -z "$fallback_template" ]; then
+            echo_error "No valid templates found in hosts directory!"
+            exit 1
+        fi
+
+        echo_info "Using fallback template: $fallback_template"
+        template="$fallback_template"
+    fi
+
+    echo_info "Creating configuration for host $hostname from template $template..."
+    cp -r "$template" "$hostname"
 
     cd "$hostname" || { echo_error "Failed to enter host directory"; exit 1; }
 
@@ -132,23 +207,106 @@ function edit_flake {
            "$flake_file"
 }
 
+function select_desktop_environment {
+    echo_question "Select desktop environment:"
+    echo "1) GNOME"
+    echo "2) KDE"
+    echo "3) None (skip)"
+
+    while true; do
+        read -r -p "$(echo_question "Enter your choice [1]: ")" choice
+        choice="${choice:-1}"
+
+        case "$choice" in
+            1) desktop_env="gnome"; break ;;
+            2) desktop_env="kde"; break ;;
+            3) desktop_env=""; break ;;
+            *) echo_error "Invalid choice. Please enter 1, 2 or 3." ;;
+        esac
+    done
+    
+    if [ -n "$desktop_env" ]; then
+        echo_info "Selected desktop environment: $desktop_env"
+    else
+        echo_info "No desktop environment selected"
+    fi
+    declare -g desktop_env
+}
+
+function select_graphics_driver {
+    echo_question "Select graphics driver:"
+    echo "1) Intel"
+    echo "2) NVIDIA"
+    echo "3) NVIDIA + Intel (hybrid)"
+    echo "4) None (skip)"
+
+    while true; do
+        read -r -p "$(echo_question "Enter your choice [1]: ")" choice
+        choice="${choice:-1}"
+
+        case "$choice" in
+            1) graphics_driver="intel"; break ;;
+            2) graphics_driver="nvidia"; break ;;
+            3) graphics_driver="nvidia-intel"; break ;;
+            4) graphics_driver=""; break ;;
+            *) echo_error "Invalid choice. Please enter 1, 2, 3 or 4." ;;
+        esac
+    done
+
+    if [ -n "$graphics_driver" ]; then
+        echo_info "Selected graphics driver: $graphics_driver"
+    else
+        echo_info "No graphics driver selected"
+    fi
+    declare -g graphics_driver
+}
+
 function edit_config_files {
     local repo_dir="$HOME/.nix"
+    local files_to_edit=()
 
     echo_info "Opening configuration files for editing..."
-    local files_to_edit=(
+
+    # Common files for all templates
+    local common_files=(
         "local-packages.nix"
         "../../home-manager/home-packages.nix"
         "../../home-manager/modules/git.nix"
-        "../../nixos/modules/base/default.nix"
-        "../../nixos/modules/boot/default.nix"
-        "../../nixos/modules/desktop/default.nix"
-        "../../nixos/modules/graphics/default.nix"
     )
 
+    # Template-specific files
+    if [[ "$template" == "nixos" ]]; then
+        files_to_edit=(
+            "${common_files[@]}"
+            "../../nixos/modules/base/default.nix"
+            "../../nixos/modules/boot/default.nix"
+            "../../nixos/modules/desktop/default.nix"
+            "../../nixos/modules/graphics/default.nix"
+        )
+    else
+        # Add template-specific configuration file
+        files_to_edit+=("../../nixos/modules/${template}.nix")
+
+        # Add desktop environment if selected
+        select_desktop_environment
+        if [ -n "$desktop_env" ]; then
+            files_to_edit+=("../../nixos/modules/desktop/${desktop_env}.nix")
+        fi
+
+        # Add graphics driver if selected
+        select_graphics_driver
+        if [ -n "$graphics_driver" ]; then
+            files_to_edit+=("../../nixos/modules/graphics/${graphics_driver}.nix")
+        fi
+
+        # Add common files last so they appear first in the editor
+        files_to_edit+=("${common_files[@]}")
+    fi
+
     for file in "${files_to_edit[@]}"; do
-        if [ -f "$repo_dir/hosts/$hostname/$file" ]; then
-            nano "$repo_dir/hosts/$hostname/$file"
+        local full_path="$repo_dir/hosts/$hostname/$file"
+        if [ -f "$full_path" ]; then
+            nano "$full_path"
         else
             echo_warn "File $file not found, skipping..."
         fi
@@ -166,7 +324,6 @@ function edit_zapret_config {
     local repo_dir="$HOME/.nix"
     nano "$repo_dir/nixos/modules/base/zapret.nix"
 }
-
 
 function clean_repository {
     local repo_dir="$HOME/.nix"
@@ -215,8 +372,9 @@ function main {
 
     check_requirements
     get_config_values
+    choose_template
     setup_repository
-    configure_host "$hostname"
+    configure_host "$hostname" "$template"
     edit_flake
     edit_config_files
     run_zapret_check

@@ -27,6 +27,6 @@
     # ./yggdrasil.nix
     ./zapret.nix
     ./zerotierone.nix
-    ./zram.nix
+    # ./zram.nix
   ];
 }

@@ -5,6 +5,7 @@
       cudaPackages.cudatoolkit
       # cudaPackages.cudnn
       # cudaPackages.cutensor
+      egl-wayland
       nvidia-vaapi-driver
     ];
   };

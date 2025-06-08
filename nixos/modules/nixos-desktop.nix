@@ -20,8 +20,10 @@
     ./base/nix.nix
     ./base/obs.nix
     ./base/printing.nix
+    # ./base/spice.nix
     ./base/steam.nix
     ./base/timezone.nix
+    # ./base/tlp.nix
     ./base/trim.nix
     ./base/user.nix
     ./base/virt-manager.nix
