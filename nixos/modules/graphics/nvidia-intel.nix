@@ -5,8 +5,8 @@
       cudaPackages.cudatoolkit
       # cudaPackages.cudnn
       # cudaPackages.cutensor
-      intel-media-driver
       egl-wayland
+      intel-media-driver
       nvidia-vaapi-driver
       vpl-gpu-rt
     ];

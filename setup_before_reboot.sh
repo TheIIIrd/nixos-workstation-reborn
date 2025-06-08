@@ -109,8 +109,29 @@ function configure_host {
     cd "$repo_dir/hosts" || { echo_error "Failed to enter hosts directory"; exit 1; }
 
     if [ ! -d "$hostname" ]; then
-        echo_info "Creating configuration for host $hostname..."
-        cp -r nixos "$hostname"
+        echo_info "Select configuration type:"
+        echo "1) Manual configuration (copy from nixos)"
+        echo "2) Desktop configuration (copy from nixos-desktop)"
+        echo "3) Laptop configuration (copy from nixos-laptop)"
+        
+        read -r -p "$(echo_question "Enter your choice [1-3]: ")" config_type
+        
+        case $config_type in
+            2)
+                echo_info "Creating desktop configuration for host $hostname..."
+                cp -r nixos-desktop "$hostname"
+                ;;
+            3)
+                echo_info "Creating laptop configuration for host $hostname..."
+                cp -r nixos-laptop "$hostname"
+                ;;
+            *)
+                echo_info "Creating manual configuration for host $hostname..."
+                cp -r nixos "$hostname"
+                ;;
+        esac
+        
+        declare -g config_type
     fi
 
     cd "$hostname" || { echo_error "Failed to enter host directory"; exit 1; }
@@ -134,25 +155,86 @@ function edit_flake {
 
 function edit_config_files {
     local repo_dir="$HOME/.nix"
+    local host_dir="$repo_dir/hosts/$hostname"
 
     echo_info "Opening configuration files for editing..."
-    local files_to_edit=(
+
+    local common_files=(
         "local-packages.nix"
         "../../home-manager/home-packages.nix"
         "../../home-manager/modules/git.nix"
-        "../../nixos/modules/base/default.nix"
-        "../../nixos/modules/boot/default.nix"
-        "../../nixos/modules/desktop/default.nix"
-        "../../nixos/modules/graphics/default.nix"
     )
 
-    for file in "${files_to_edit[@]}"; do
-        if [ -f "$repo_dir/hosts/$hostname/$file" ]; then
-            nano "$repo_dir/hosts/$hostname/$file"
+    case $config_type in
+        2)  # Desktop
+            local specific_files=(
+                "../../nixos/modules/nixos-desktop.nix"
+            )
+            ;;
+        3)  # Laptop
+            local specific_files=(
+                "../../nixos/modules/nixos-laptop.nix"
+            )
+            ;;
+        *)  # Manual
+            local specific_files=(
+                "../../nixos/modules/base/default.nix"
+                "../../nixos/modules/boot/default.nix"
+                "../../nixos/modules/desktop/default.nix"
+                "../../nixos/modules/graphics/default.nix"
+            )
+            ;;
+    esac
+
+    for file in "${common_files[@]}"; do
+        if [ -f "$host_dir/$file" ]; then
+            nano "$host_dir/$file"
         else
             echo_warn "File $file not found, skipping..."
         fi
     done
+
+    for file in "${specific_files[@]}"; do
+        if [ -f "$host_dir/$file" ]; then
+            nano "$host_dir/$file"
+        else
+            echo_warn "File $file not found, skipping..."
+        fi
+    done
+
+    if [[ $config_type =~ ^[23]$ ]]; then
+        echo_info "Select desktop environment:"
+        echo "1) GNOME"
+        echo "2) KDE"
+        read -r -p "$(echo_question "Enter your choice [1-2]: ")" de_choice
+
+        case $de_choice in
+            1)
+                nano "$host_dir/../../nixos/modules/desktop/gnome.nix"
+                ;;
+            2)
+                nano "$host_dir/../../nixos/modules/desktop/kde.nix"
+                ;;
+        esac
+
+        echo_info "Select graphics configuration:"
+        echo "1) Intel"
+        echo "2) NVIDIA"
+        echo "3) NVIDIA + Intel (hybrid)"
+        read -r -p "$(echo_question "Enter your choice [1-3]: ")" graphics_choice
+
+        case $graphics_choice in
+            1)
+                nano "$host_dir/../../nixos/modules/graphics/intel.nix"
+                ;;
+            2)
+                nano "$host_dir/../../nixos/modules/graphics/nvidia.nix"
+                ;;
+            3)
+                nano "$host_dir/../../nixos/modules/graphics/nvidia-intel.nix"
+                ;;
+        esac
+    fi
 }
 
 function run_zapret_check {
