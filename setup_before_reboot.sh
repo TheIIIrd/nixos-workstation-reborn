@@ -109,35 +109,57 @@ function configure_host {
     cd "$repo_dir/hosts" || { echo_error "Failed to enter hosts directory"; exit 1; }
 
     if [ ! -d "$hostname" ]; then
-        echo_info "Select configuration type:"
-        echo "1) Manual configuration (copy from nixos)"
-        echo "2) Desktop configuration (copy from nixos-desktop)"
-        echo "3) Laptop configuration (copy from nixos-laptop)"
-        
-        read -r -p "$(echo_question "Enter your choice [1-3]: ")" config_type
-        
-        case $config_type in
-            2)
-                echo_info "Creating desktop configuration for host $hostname..."
-                cp -r nixos-desktop "$hostname"
-                ;;
-            3)
-                echo_info "Creating laptop configuration for host $hostname..."
-                cp -r nixos-laptop "$hostname"
-                ;;
-            *)
-                echo_info "Creating manual configuration for host $hostname..."
-                cp -r nixos "$hostname"
-                ;;
-        esac
-        
-        declare -g config_type
+        echo_info "Select configuration template:"
+        echo "1) Manual configuration (advanced users)"
+        echo "2) Desktop configuration"
+        echo "3) Laptop configuration"
+
+        while true; do
+            read -r -p "$(echo_question "Enter your choice [1-3]: ")" config_type
+            case $config_type in
+                1)
+                    echo_info "Creating manual configuration for host $hostname..."
+                    cp -r nixos "$hostname"
+                    declare -g config_type="manual"
+                    break
+                    ;;
+                2)
+                    if [ -d "nixos-desktop" ]; then
+                        echo_info "Creating desktop configuration for host $hostname..."
+                        cp -r nixos-desktop "$hostname"
+                        declare -g config_type="desktop"
+                        break
+                    else
+                        echo_error "Desktop template not found!"
+                    fi
+                    ;;
+                3)
+                    if [ -d "nixos-laptop" ]; then
+                        echo_info "Creating laptop configuration for host $hostname..."
+                        cp -r nixos-laptop "$hostname"
+                        declare -g config_type="laptop"
+                        break
+                    else
+                        echo_error "Laptop template not found!"
+                    fi
+                    ;;
+                *)
+                    echo_error "Invalid choice, please try again."
+                    ;;
+            esac
+        done
+    else
+        echo_info "Using existing host configuration directory: $hostname"
     fi
 
     cd "$hostname" || { echo_error "Failed to enter host directory"; exit 1; }
 
     echo_info "Copying hardware configuration..."
-    cp --no-preserve=mode /etc/nixos/hardware-configuration.nix .
+    if [ -f "/etc/nixos/hardware-configuration.nix" ]; then
+        cp --no-preserve=mode /etc/nixos/hardware-configuration.nix .
+    else
+        echo_warn "Hardware configuration not found in /etc/nixos/"
+    fi
 }
 
 function edit_flake {
@@ -159,24 +181,35 @@ function edit_config_files {
 
     echo_info "Opening configuration files for editing..."
 
+    # Common files for all configurations
     local common_files=(
         "local-packages.nix"
         "../../home-manager/home-packages.nix"
         "../../home-manager/modules/git.nix"
     )
 
-    case $config_type in
-        2)  # Desktop
+    # Edit common files
+    for file in "${common_files[@]}"; do
+        if [ -f "$host_dir/$file" ]; then
+            nano "$host_dir/$file"
+        else
+            echo_warn "File $file not found, skipping..."
+        fi
+    done
+
+    # Configuration-specific files
+    case "$config_type" in
+        "desktop")
             local specific_files=(
                 "../../nixos/modules/nixos-desktop.nix"
             )
             ;;
-        3)  # Laptop
+        "laptop")
             local specific_files=(
                 "../../nixos/modules/nixos-laptop.nix"
             )
             ;;
-        *)  # Manual
+        *)
             local specific_files=(
                 "../../nixos/modules/base/default.nix"
                 "../../nixos/modules/boot/default.nix"
@@ -186,14 +219,7 @@ function edit_config_files {
             ;;
     esac
 
-    for file in "${common_files[@]}"; do
-        if [ -f "$host_dir/$file" ]; then
-            nano "$host_dir/$file"
-        else
-            echo_warn "File $file not found, skipping..."
-        fi
-    done
-
+    # Edit specific files
     for file in "${specific_files[@]}"; do
         if [ -f "$host_dir/$file" ]; then
             nano "$host_dir/$file"
@@ -202,36 +228,61 @@ function edit_config_files {
         fi
     done
 
-    if [[ $config_type =~ ^[23]$ ]]; then
+    # Additional configuration for desktop/laptop
+    if [[ "$config_type" =~ ^(desktop|laptop)$ ]]; then
+        # Desktop environment selection
         echo_info "Select desktop environment:"
         echo "1) GNOME"
         echo "2) KDE"
-        read -r -p "$(echo_question "Enter your choice [1-2]: ")" de_choice
+        echo "0) Skip"
 
-        case $de_choice in
+        read -r -p "$(echo_question "Enter your choice [0-2]: ")" de_choice
+        case "$de_choice" in
             1)
-                nano "$host_dir/../../nixos/modules/desktop/gnome.nix"
+                if [ -f "$host_dir/../../nixos/modules/desktop/gnome.nix" ]; then
+                    nano "$host_dir/../../nixos/modules/desktop/gnome.nix"
+                else
+                    echo_warn "GNOME configuration not found!"
+                fi
                 ;;
             2)
-                nano "$host_dir/../../nixos/modules/desktop/kde.nix"
+                if [ -f "$host_dir/../../nixos/modules/desktop/kde.nix" ]; then
+                    nano "$host_dir/../../nixos/modules/desktop/kde.nix"
+                else
+                    echo_warn "KDE configuration not found!"
+                fi
                 ;;
         esac
 
+        # Graphics configuration
         echo_info "Select graphics configuration:"
         echo "1) Intel"
         echo "2) NVIDIA"
         echo "3) NVIDIA + Intel (hybrid)"
-        read -r -p "$(echo_question "Enter your choice [1-3]: ")" graphics_choice
-
-        case $graphics_choice in
+        echo "0) Skip"
+        
+        read -r -p "$(echo_question "Enter your choice [0-3]: ")" graphics_choice
+        case "$graphics_choice" in
             1)
-                nano "$host_dir/../../nixos/modules/graphics/intel.nix"
+                if [ -f "$host_dir/../../nixos/modules/graphics/intel.nix" ]; then
+                    nano "$host_dir/../../nixos/modules/graphics/intel.nix"
+                else
+                    echo_warn "Intel graphics configuration not found!"
+                fi
                 ;;
             2)
-                nano "$host_dir/../../nixos/modules/graphics/nvidia.nix"
+                if [ -f "$host_dir/../../nixos/modules/graphics/nvidia.nix" ]; then
+                    nano "$host_dir/../../nixos/modules/graphics/nvidia.nix"
+                else
+                    echo_warn "NVIDIA graphics configuration not found!"
+                fi
                 ;;
             3)
-                nano "$host_dir/../../nixos/modules/graphics/nvidia-intel.nix"
+                if [ -f "$host_dir/../../nixos/modules/graphics/nvidia-intel.nix" ]; then
+                    nano "$host_dir/../../nixos/modules/graphics/nvidia-intel.nix"
+                else
+                    echo_warn "Hybrid graphics configuration not found!"
+                fi
                 ;;
         esac
     fi
@@ -246,9 +297,12 @@ function run_zapret_check {
 
 function edit_zapret_config {
     local repo_dir="$HOME/.nix"
-    nano "$repo_dir/nixos/modules/base/zapret.nix"
+    if [ -f "$repo_dir/nixos/modules/base/zapret.nix" ]; then
+        nano "$repo_dir/nixos/modules/base/zapret.nix"
+    else
+        echo_warn "Zapret configuration not found!"
+    fi
 }
-
 
 function clean_repository {
     local repo_dir="$HOME/.nix"
