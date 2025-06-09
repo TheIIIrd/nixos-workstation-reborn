@@ -60,8 +60,10 @@ function uncomment_gtk_settings {
 
     echo_info "Uncommenting GTK settings in style.nix..."
 
+    # Create backup before editing
     cp "$style_file" "${style_file}.bak"
 
+    # Original sed commands as requested
     sed -i -e "s/^  # gtk = {/  gtk = {/" \
            -e "s/^  #   enable = true;/    enable = true;/" \
            -e "s/^  #   theme = {/    theme = {/" \
@@ -76,40 +78,85 @@ function uncomment_gtk_settings {
     echo_info "GTK settings uncommented successfully."
 }
 
-function setup_flatpak {
-    if ! command -v flatpak >/dev/null 2>&1; then
-        echo_warn "Flatpak is not installed. Skipping Flatpak setup."
-        return 1
-    fi
+function run_nh_operations {
+    if command -v nh &>/dev/null; then
+        if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then
+            if ask_confirmation "Uncomment GTK settings in style.nix for GNOME?"; then
+                uncomment_gtk_settings
+            fi
+        fi
 
-    if ! ask_confirmation "Configure Flatpak?"; then
+        execute_with_confirmation "Run nh home switch?" "nh home switch"
+        execute_with_confirmation "Optimize nix store?" "nix store optimise"
+    else
+        echo_warn "nh command not found, skipping nh operations"
+    fi
+}
+
+function setup_flatpak {
+    if ! ask_confirmation "Configure Flatpak? (This will add Flathub repository)"; then
+        echo_info "Skipping Flatpak setup."
         return 0
     fi
 
+    # Check if flatpak is installed
+    if ! command -v flatpak &>/dev/null; then
+        echo_warn "Flatpak is not installed."
+
+        # Offer to install flatpak if not found
+        if ask_confirmation "Install Flatpak?"; then
+            echo_info "Installing Flatpak..."
+            if command -v nixos-rebuild &>/dev/null; then
+                sudo nixos-rebuild switch -pkg flatpak
+            else
+                sudo nix-env -iA nixpkgs.flatpak
+            fi
+        else
+            return 1
+        fi
+    fi
+
+    # Add Flathub repository
     echo_info "Adding Flathub repository..."
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-    flatpak install -y org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark 2>/dev/null || echo_warn "Failed to install GTK themes"
-
-    local apps_to_install=(
-        "ch.tlaun.TL"
-        "com.github.tchx84.Flatseal"
-        "com.heroicgameslauncher.hgl"
-        "page.codeberg.libre_menu_editor.LibreMenuEditor"
+    # Install GTK themes
+    local themes=(
+        "org.gtk.Gtk3theme.adw-gtk3"
+        "org.gtk.Gtk3theme.adw-gtk3-dark"
     )
 
-    for app in "${apps_to_install[@]}"; do
-        if ask_confirmation "Install $app from Flathub?"; then
-            echo_info "Installing $app..."
-            flatpak install -y flathub "$app" || echo_warn "Failed to install $app"
+    if ask_confirmation "Install GTK themes for Flatpak apps?"; then
+        for theme in "${themes[@]}"; do
+            echo_info "Installing theme: $theme"
+            flatpak install -y "$theme" || echo_warn "Failed to install theme $theme"
+        done
+    fi
+
+    # Applications to install
+    local apps=(
+        "ch.tlaun.TL:TL - The Linux Launcher"
+        "com.github.tchx84.Flatseal:Flatseal - Flatpak Permission Manager"
+        "com.heroicgameslauncher.hgl:Heroic Games Launcher"
+        "page.codeberg.libre_menu_editor.LibreMenuEditor:Menu Editor"
+    )
+
+    # Prompt for application installation
+    for app in "${apps[@]}"; do
+        IFS=':' read -r app_id app_name <<< "$app"
+
+        if ask_confirmation "Install $app_name?"; then
+            echo_info "Installing $app_name..."
+            flatpak install -y flathub "$app_id" || echo_warn "Failed to install $app_name"
+
+            # Special handling for TL
+            if [[ "$app_id" == "ch.tlaun.TL" ]]; then
+                if ask_confirmation "Set TL environment override?"; then
+                    flatpak --user override ch.tlaun.TL --env=TL_BOOTSTRAP_OPTIONS="-Dtl.useForce"
+                fi
+            fi
         fi
     done
-
-    if flatpak list --app | grep -q "ch.tlaun.TL"; then
-        if ask_confirmation "Set TL environment override?"; then
-            flatpak --user override ch.tlaun.TL --env=TL_BOOTSTRAP_OPTIONS="-Dtl.useForce"
-        fi
-    fi
 }
 
 function setup_gnome_keybindings {
@@ -123,22 +170,53 @@ function setup_gnome_keybindings {
 function setup_fonts {
     if ask_confirmation "Copy corefonts to ~/.local/share/fonts?"; then
         fonts_dir="$HOME/.local/share/fonts"
-        [[ ! -d "$fonts_dir" ]] && mkdir -p "$fonts_dir"
+        mkdir -p "$fonts_dir"
 
-        if cp --no-preserve=mode /nix/store/*-corefonts-1/share/fonts/truetype/* "$fonts_dir" 2>/dev/null; then
-            echo_info "Fonts copied successfully."
+        # Find corefonts in nix store
+        local corefonts_path
+        corefonts_path=$(find /nix/store -maxdepth 1 -name "*-corefonts-1" -type d | head -n 1)
+
+        if [[ -n "$corefonts_path" ]]; then
+            if cp -r --no-preserve=mode "$corefonts_path"/share/fonts/truetype/* "$fonts_dir"; then
+                echo_info "Fonts copied successfully."
+                fc-cache -f "$fonts_dir"
+            else
+                echo_error "Failed to copy fonts."
+            fi
         else
-            echo_error "Failed to copy fonts."
+            echo_warn "Corefonts not found in nix store."
         fi
     fi
 }
 
 function setup_folder_structure {
-    if ask_confirmation "Create recommended folder structure in ~/BitLab?"; then
-        mkdir -p ~/BitLab/CreationLab/{ArtStore,CodeStore/{ArcLab,CppLab,CsLab,PyLab,RsLab},DataStore,PcbStore} \
-                 ~/BitLab/GameLab/HeroicLab/Prefixes/default \
-                 ~/BitLab/VirtualLab/{EngineLab,SysImages} \
-                 ~/BitLab/WorkBench
+    local base_dir="$HOME/BitLab"
+
+    if ask_confirmation "Create recommended folder structure in $base_dir?"; then
+        # Define folder structure
+        declare -A folders=(
+            ["$base_dir/CreationLab/ArtStore"]="Art projects"
+            ["$base_dir/CreationLab/CodeStore/ArcLab"]="Arch Linux projects"
+            ["$base_dir/CreationLab/CodeStore/CppLab"]="C++ projects"
+            ["$base_dir/CreationLab/CodeStore/CsLab"]="C# projects"
+            ["$base_dir/CreationLab/CodeStore/PyLab"]="Python projects"
+            ["$base_dir/CreationLab/CodeStore/RsLab"]="Rust projects"
+            ["$base_dir/CreationLab/DataStore"]="Data storage"
+            ["$base_dir/CreationLab/PcbStore"]="PCB designs"
+            ["$base_dir/GameLab/HeroicLab/Prefixes/default"]="Heroic Games Launcher prefixes"
+            ["$base_dir/VirtualLab/EngineLab"]="Virtualization engines"
+            ["$base_dir/VirtualLab/SysImages"]="System images"
+            ["$base_dir/WorkBench"]="Workspace"
+        )
+
+        # Create folders with status messages
+        for folder in "${!folders[@]}"; do
+            if [[ ! -d "$folder" ]]; then
+                echo_info "Creating ${folders[$folder]}..."
+                mkdir -p "$folder"
+            fi
+        done
+
         echo_info "Folder structure created."
     fi
 }
@@ -146,18 +224,10 @@ function setup_folder_structure {
 function main {
     echo_info "Starting system setup..."
 
-    # nh setup
-    if command -v nh >/dev/null 2>&1; then
-        if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then
-            if ask_confirmation "Uncomment GTK settings in style.nix for GNOME?"; then
-                uncomment_gtk_settings
-            fi
-        fi
+    # Run nh operations first
+    run_nh_operations
 
-        execute_with_confirmation "Run nh home switch?" "nh home switch"
-        execute_with_confirmation "Optimize nix store?" "nix store optimise"
-    fi
-
+    # Setup sections
     setup_flatpak
     setup_gnome_keybindings
     setup_fonts
@@ -168,6 +238,8 @@ function main {
     if ask_confirmation "Reboot the system now?"; then
         echo_info "Rebooting..."
         sudo reboot
+    else
+        echo_info "You can reboot later to apply all changes."
     fi
 }
 

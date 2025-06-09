@@ -224,7 +224,7 @@ function select_desktop_environment {
             *) echo_error "Invalid choice. Please enter 1, 2 or 3." ;;
         esac
     done
-    
+
     if [ -n "$desktop_env" ]; then
         echo_info "Selected desktop environment: $desktop_env"
     else
