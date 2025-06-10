@@ -167,7 +167,6 @@ function configure_host {
     if [ ! -d "$template" ]; then
         echo_warn "Template $template not found! Using fallback templates..."
 
-        # Try to find any available template
         local fallback_template=""
         for t in nixos nixos-desktop nixos-laptop; do
             if [ -d "$t" ]; then
@@ -224,7 +223,7 @@ function select_desktop_environment {
             *) echo_error "Invalid choice. Please enter 1, 2 or 3." ;;
         esac
     done
-    
+
     if [ -n "$desktop_env" ]; then
         echo_info "Selected desktop environment: $desktop_env"
     else
@@ -299,7 +298,6 @@ function edit_config_files {
             files_to_edit+=("../../nixos/modules/graphics/${graphics_driver}.nix")
         fi
 
-        # Add common files last so they appear first in the editor
         files_to_edit+=("${common_files[@]}")
     fi
 
@@ -385,6 +383,13 @@ function main {
     echo_info "Please reboot the system."
     echo_info "After rebooting, run 'bash ./setup_after_reboot.sh' to complete the setup."
     echo_info "Note: Zsh setup is not required; skip this step to let home-manager handle it automatically."
+
+    if ask_confirmation "Reboot the system now?"; then
+        echo_info "Rebooting..."
+        sudo reboot
+    else
+        echo_info "You can reboot later to apply all changes."
+    fi
 }
 
 main "$@"
