@@ -135,7 +135,7 @@ function setup_flatpak {
 
     # Applications to install
     local apps=(
-        "ch.tlaun.TL:TL - The Linux Launcher"
+        "ch.tlaun.TL:TL - Minecraft Launcher"
         "com.github.tchx84.Flatseal:Flatseal - Flatpak Permission Manager"
         "com.heroicgameslauncher.hgl:Heroic Games Launcher"
         "page.codeberg.libre_menu_editor.LibreMenuEditor:Menu Editor"
@@ -196,7 +196,7 @@ function setup_folder_structure {
         # Define folder structure
         declare -A folders=(
             ["$base_dir/CreationLab/ArtStore"]="Art projects"
-            ["$base_dir/CreationLab/CodeStore/ArcLab"]="Arch Linux projects"
+            ["$base_dir/CreationLab/CodeStore/ArcLab"]="Git projects"
             ["$base_dir/CreationLab/CodeStore/CppLab"]="C++ projects"
             ["$base_dir/CreationLab/CodeStore/CsLab"]="C# projects"
             ["$base_dir/CreationLab/CodeStore/PyLab"]="Python projects"
@@ -204,7 +204,7 @@ function setup_folder_structure {
             ["$base_dir/CreationLab/DataStore"]="Data storage"
             ["$base_dir/CreationLab/PcbStore"]="PCB designs"
             ["$base_dir/GameLab/HeroicLab/Prefixes/default"]="Heroic Games Launcher prefixes"
-            ["$base_dir/VirtualLab/EngineLab"]="Virtualization engines"
+            ["$base_dir/VirtualLab/EngineLab"]="Virtualization disk images"
             ["$base_dir/VirtualLab/SysImages"]="System images"
             ["$base_dir/WorkBench"]="Workspace"
         )
