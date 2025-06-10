@@ -385,6 +385,13 @@ function main {
     echo_info "Please reboot the system."
     echo_info "After rebooting, run 'bash ./setup_after_reboot.sh' to complete the setup."
     echo_info "Note: Zsh setup is not required; skip this step to let home-manager handle it automatically."
+
+    if ask_confirmation "Reboot the system now?"; then
+        echo_info "Rebooting..."
+        sudo reboot
+    else
+        echo_info "You can reboot later to apply all changes."
+    fi
 }
 
 main "$@"
