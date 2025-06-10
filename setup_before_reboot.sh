@@ -167,7 +167,6 @@ function configure_host {
     if [ ! -d "$template" ]; then
         echo_warn "Template $template not found! Using fallback templates..."
 
-        # Try to find any available template
         local fallback_template=""
         for t in nixos nixos-desktop nixos-laptop; do
             if [ -d "$t" ]; then
@@ -299,7 +298,6 @@ function edit_config_files {
             files_to_edit+=("../../nixos/modules/graphics/${graphics_driver}.nix")
         fi
 
-        # Add common files last so they appear first in the editor
         files_to_edit+=("${common_files[@]}")
     fi
 

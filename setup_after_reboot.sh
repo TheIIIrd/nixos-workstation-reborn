@@ -63,7 +63,6 @@ function uncomment_gtk_settings {
     # Create backup before editing
     cp "$style_file" "${style_file}.bak"
 
-    # Original sed commands as requested
     sed -i -e "s/^  # gtk = {/  gtk = {/" \
            -e "s/^  #   enable = true;/    enable = true;/" \
            -e "s/^  #   theme = {/    theme = {/" \
@@ -102,25 +101,13 @@ function setup_flatpak {
     # Check if flatpak is installed
     if ! command -v flatpak &>/dev/null; then
         echo_warn "Flatpak is not installed."
-
-        # Offer to install flatpak if not found
-        if ask_confirmation "Install Flatpak?"; then
-            echo_info "Installing Flatpak..."
-            if command -v nixos-rebuild &>/dev/null; then
-                sudo nixos-rebuild switch -pkg flatpak
-            else
-                sudo nix-env -iA nixpkgs.flatpak
-            fi
-        else
-            return 1
-        fi
+        return 1
     fi
 
     # Add Flathub repository
     echo_info "Adding Flathub repository..."
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-    # Install GTK themes
     local themes=(
         "org.gtk.Gtk3theme.adw-gtk3"
         "org.gtk.Gtk3theme.adw-gtk3-dark"
@@ -133,7 +120,6 @@ function setup_flatpak {
         done
     fi
 
-    # Applications to install
     local apps=(
         "ch.tlaun.TL:TL - Minecraft Launcher"
         "com.github.tchx84.Flatseal:Flatseal - Flatpak Permission Manager"
@@ -141,7 +127,6 @@ function setup_flatpak {
         "page.codeberg.libre_menu_editor.LibreMenuEditor:Menu Editor"
     )
 
-    # Prompt for application installation
     for app in "${apps[@]}"; do
         IFS=':' read -r app_id app_name <<< "$app"
 
@@ -149,7 +134,6 @@ function setup_flatpak {
             echo_info "Installing $app_name..."
             flatpak install -y flathub "$app_id" || echo_warn "Failed to install $app_name"
 
-            # Special handling for TL
             if [[ "$app_id" == "ch.tlaun.TL" ]]; then
                 if ask_confirmation "Set TL environment override?"; then
                     flatpak --user override ch.tlaun.TL --env=TL_BOOTSTRAP_OPTIONS="-Dtl.useForce"
@@ -209,7 +193,6 @@ function setup_folder_structure {
             ["$base_dir/WorkBench"]="Workspace"
         )
 
-        # Create folders with status messages
         for folder in "${!folders[@]}"; do
             if [[ ! -d "$folder" ]]; then
                 echo_info "Creating ${folders[$folder]}..."
@@ -224,10 +207,7 @@ function setup_folder_structure {
 function main {
     echo_info "Starting system setup..."
 
-    # Run nh operations first
     run_nh_operations
-
-    # Setup sections
     setup_flatpak
     setup_gnome_keybindings
     setup_fonts
