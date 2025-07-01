@@ -1,13 +1,14 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     adw-gtk3
+    libsForQt5.breeze-qt5
+    morewaita-icon-theme
     tela-circle-icon-theme
   ];
 
   qt = {
     enable = true;
-    platformTheme.name = "kde6";
-    style.name = "breeze";
+    platformTheme.name = "qtct";
   };
 
   # gtk = {

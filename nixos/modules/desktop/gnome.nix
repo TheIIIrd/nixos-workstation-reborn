@@ -27,17 +27,18 @@
     gnome-tweaks
     mission-center
     ptyxis
+    rnote
   ]) ++ (with pkgs.gnomeExtensions; [
+    # accent-directories
     appindicator
     # arcmenu
-    blur-my-shell
-    burn-my-windows
-    caffeine
+    # blur-my-shell
+    # burn-my-windows
+    # caffeine
     clipboard-indicator
     # compiz-windows-effect
     # dash-to-panel
     just-perfection
-    # quick-lang-switch
-    vitals
+    # vitals
   ]);
 }

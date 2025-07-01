@@ -53,6 +53,6 @@
 
     # Other
     # kdePackages.qt6ct
-    # libsForQt5.qt5ct
+    libsForQt5.qt5ct
   ];
 }
