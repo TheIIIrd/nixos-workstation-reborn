@@ -50,9 +50,5 @@
     ninja
     rustc
     zulu
-
-    # Other
-    # kdePackages.qt6ct
-    libsForQt5.qt5ct
   ];
 }
