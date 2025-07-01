@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     adw-gtk3
     libsForQt5.breeze-qt5
+    morewaita-icon-theme
     tela-circle-icon-theme
   ];
 
