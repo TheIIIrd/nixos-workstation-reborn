@@ -5,7 +5,7 @@
     # Packages in each category are sorted alphabetically
 
     # Desktop apps
-    blockbench
+    # blockbench
     inkscape
     kicad
     krita
@@ -18,7 +18,7 @@
     # telegram-desktop
     tenacity
     tor-browser
-    ungoogled-chromium
+    # ungoogled-chromium
     vesktop
     vscodium
 
