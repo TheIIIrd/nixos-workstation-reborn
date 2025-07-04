@@ -12,7 +12,10 @@
     ];
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [
+    "modesetting"  # Example for Intel iGPU; use "amdgpu" here instead if your iGPU is AMD
+    "nvidia"
+  ];
 
   hardware.nvidia = {
     modesetting.enable = true;
