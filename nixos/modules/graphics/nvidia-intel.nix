@@ -13,7 +13,7 @@
   };
 
   services.xserver.videoDrivers = [
-    "modesetting"  # example for Intel iGPU; use "amdgpu" here instead if your iGPU is AMD
+    "modesetting"  # Example for Intel iGPU; use "amdgpu" here instead if your iGPU is AMD
     "nvidia"
   ];
 
