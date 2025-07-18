@@ -112,7 +112,7 @@ function setup_repository {
             echo_info "Available branches:"
             git branch -a
 
-            echo_question "Enter branch name to switch to (e.g., main, ): "
+            echo_question "Enter branch name to switch to (e.g., main, unstable): "
             read -r branch_name
             if git checkout "$branch_name" 2>/dev/null; then
                 echo_info "Switched to $branch_name branch"
