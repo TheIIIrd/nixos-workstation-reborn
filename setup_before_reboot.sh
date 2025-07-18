@@ -94,9 +94,9 @@ function setup_repository {
         git clone https://github.com/TheIIIrd/nixos-workstation-reborn.git "$repo_dir"
         cd "$repo_dir"
 
-        if ask_confirmation "Switch to gen-v2 branch?"; then
-            echo_info "Switching to gen-v2 branch..."
-            git checkout gen-v2
+        if ask_confirmation "Switch to unstable branch?"; then
+            echo_info "Switching to unstable branch..."
+            git checkout unstable
         else
             echo_info "Keeping main branch"
         fi
@@ -112,7 +112,7 @@ function setup_repository {
             echo_info "Available branches:"
             git branch -a
 
-            echo_question "Enter branch name to switch to (e.g., main, gen-v2): "
+            echo_question "Enter branch name to switch to (e.g., main, unstable): "
             read -r branch_name
             if git checkout "$branch_name" 2>/dev/null; then
                 echo_info "Switched to $branch_name branch"
